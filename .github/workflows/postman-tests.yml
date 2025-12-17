@@ -9,6 +9,7 @@ on:
 
 env:
   POSTMAN_COLLECTION_ID: 30401009-74f1a924-ac42-428e-882a-2724d53fd3a8
+  POSTMAN_ENVIRONMENT_ID: 30401009-c5a8cc3e-70dc-4025-adb4-2fa4ac24b9c8
 
 jobs:
   postman-tests:
@@ -18,28 +19,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Install Postman CLI
+        run: curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
-      - name: Install Newman
-        run: npm install -g newman newman-reporter-htmlextra
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
 
       - name: Run Postman Collection
         run: |
-          newman run "https://api.getpostman.com/collections/${{ env.POSTMAN_COLLECTION_ID }}?apikey=${{ secrets.POSTMAN_API_KEY }}" \
-            --reporters cli,htmlextra \
-            --reporter-htmlextra-export reports/newman-report.html
-        env:
-          API_BASE_URL: ${{ vars.API_BASE_URL }}
-
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: newman-report
-          path: reports/
-          retention-days: 30
+          postman collection run ${{ env.POSTMAN_COLLECTION_ID }} \
+            --environment ${{ env.POSTMAN_ENVIRONMENT_ID }}
 
 
