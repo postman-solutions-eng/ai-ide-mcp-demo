@@ -1,0 +1,11 @@
+# Place your Postman collection and environment files here:
+# - collection.json
+# - environment.json
+#
+# Export from Postman:
+# 1. Collection → Right-click → Export → Collection v2.1
+# 2. Environment → Manage Environments → Export
+#
+# Or use Postman API to fetch them in the workflow
+
+

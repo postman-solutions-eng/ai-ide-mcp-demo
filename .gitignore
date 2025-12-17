@@ -1,0 +1,123 @@
+# =========================
+# Go
+# =========================
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.html
+coverage.txt
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Dependency directories (remove if using Go modules)
+vendor/
+
+# =========================
+# IDE & Editors
+# =========================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (GoLand, IntelliJ)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# =========================
+# OS Files
+# =========================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# =========================
+# Environment & Secrets
+# =========================
+
+.env
+.env.local
+.env.*.local
+*.env
+.envrc
+
+# Local config files
+config.local.yaml
+config.local.json
+*.local.yaml
+*.local.json
+
+# =========================
+# Postman / Newman
+# =========================
+
+# Newman reports (generated)
+reports/
+newman/
+
+# Don't commit environments with secrets
+postman/*-secrets.json
+postman/*.local.json
+
+# =========================
+# Build & Debug
+# =========================
+
+# Air (hot reload)
+tmp/
+
+# Debug files
+debug
+*.log
+*.log.*
+
+# =========================
+# Node (for Newman)
+# =========================
+
+node_modules/
+package-lock.json
+yarn.lock
+
+
