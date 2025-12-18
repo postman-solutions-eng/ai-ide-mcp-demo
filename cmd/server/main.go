@@ -32,6 +32,7 @@ func main() {
 		r.Post("/services", h.CreateService)
 		r.Get("/services/{id}", h.GetService)
 		r.Patch("/services/{id}", h.UpdateService)
+		r.Delete("/services/{id}", h.DeleteService)
 
 		// Environments
 		r.Get("/services/{id}/environments/{env}", h.GetEnvironment)

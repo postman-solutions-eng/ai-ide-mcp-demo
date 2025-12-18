@@ -130,6 +130,22 @@ func (h *Handler) UpdateService(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(svc)
 }
 
+// DeleteService handles DELETE /services/{id}
+func (h *Handler) DeleteService(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	if err := h.store.DeleteService(id); err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(models.ErrorResponse{
+			Error:   "not_found",
+			Message: "Service not found",
+		})
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+}
+
 // GetEnvironment handles GET /services/{id}/environments/{env}
 func (h *Handler) GetEnvironment(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")

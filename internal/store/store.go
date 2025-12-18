@@ -118,3 +118,16 @@ func (s *Store) UpdateService(id string, req models.UpdateServiceRequest) (model
 	return svc, nil
 }
 
+// DeleteService removes a service from the store
+func (s *Store) DeleteService(id string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if _, ok := s.services[id]; !ok {
+		return ErrNotFound
+	}
+
+	delete(s.services, id)
+	return nil
+}
+
