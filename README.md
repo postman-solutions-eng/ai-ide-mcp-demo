@@ -1,62 +1,34 @@
 # AI IDE MCP Demo
 
-Go + Chi API with Postman Collection testing via GitHub Actions.
+Demo project for generating a Go API server from a Postman Collection using AI + MCP.
 
-## Project Structure
+## The Goal
 
-```
-.
-├── .github/workflows/     # CI/CD workflows
-│   └── postman-tests.yml  # Newman collection runner
-├── cmd/
-│   └── api/
-│       └── main.go        # Application entrypoint
-├── internal/              # Private application code
-├── postman/               # Postman collections & environments
-│   ├── collection.json
-│   └── environment.json
-└── go.mod
-```
+Use the Postman MCP server to read the **Platform Service Catalog** collection and generate a working Go + Chi API server that implements it.
 
-## Development
+## Postman Assets
+
+- **Workspace:** Service Catalog - Devspace
+- **Collection:** Platform Service Catalog (MCP Demo)
+- **Environment:** Local (baseUrl: http://localhost:8080)
+
+## Demo Flow
+
+1. Start with this empty project (no Go code)
+2. Point AI at the Postman collection via MCP
+3. Generate Go server that implements the collection
+4. Run and test locally
+5. Verify against Postman tests
+
+## After Generation
 
 ```bash
 # Run the server
-go run ./cmd/api
+go run ./cmd/server
 
-# Run with hot reload (requires air)
-air
+# Test health
+curl http://localhost:8080/health
+
+# Test with Postman CLI
+postman collection run <collection-id> -e <environment-id>
 ```
-
-## Testing with Postman/Newman
-
-### Local Testing
-
-```bash
-# Install Newman
-npm install -g newman
-
-# Run collection
-newman run ./postman/collection.json -e ./postman/environment.json
-```
-
-### CI/CD
-
-The GitHub Actions workflow automatically runs the Postman collection on:
-- Push to `main`/`master`
-- Pull requests
-- Manual trigger (workflow_dispatch)
-
-## Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `API_BASE_URL` | Base URL for API requests |
-| `API_KEY` | API authentication key (secret) |
-
-Set these in GitHub repository settings:
-- **Settings → Secrets and variables → Actions**
-- Secrets: `API_KEY`
-- Variables: `API_BASE_URL`
-
-
