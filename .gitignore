@@ -112,6 +112,13 @@ debug
 *.log
 *.log.*
 
+# Compiled binary
+server
+
+# Postman backup/working files
+postman/collection-backup.json
+postman/collection-updated.json
+
 # =========================
 # Node (for Newman)
 # =========================
@@ -119,5 +126,10 @@ debug
 node_modules/
 package-lock.json
 yarn.lock
+
+
+
+
+
 
 

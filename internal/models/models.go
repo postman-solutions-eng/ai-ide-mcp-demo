@@ -106,3 +106,18 @@ type ErrorResponse struct {
 	Message string `json:"message,omitempty"`
 }
 
+// EndpointsResponse is the response for GET /services/{id}/endpoints
+type EndpointsResponse struct {
+	ServiceID string         `json:"serviceId"`
+	Endpoints []EndpointInfo `json:"endpoints"`
+}
+
+// EndpointInfo represents a single endpoint for a service environment
+type EndpointInfo struct {
+	Environment string `json:"environment"`
+	BaseURL     string `json:"baseUrl"`
+	Region      string `json:"region"`
+	Auth        string `json:"auth"`
+	Status      string `json:"status"`
+}
+

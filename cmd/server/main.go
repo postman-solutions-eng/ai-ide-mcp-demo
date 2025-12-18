@@ -43,6 +43,9 @@ func main() {
 		// Environments
 		r.Get("/services/{id}/environments/{env}", h.GetEnvironment)
 
+		// Endpoints
+		r.Get("/services/{id}/endpoints", h.GetEndpoints)
+
 		// Actions
 		r.Post("/services/{id}/rotate-key", h.RotateKey)
 	})

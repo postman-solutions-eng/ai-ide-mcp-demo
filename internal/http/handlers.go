@@ -191,3 +191,67 @@ func (h *Handler) RotateKey(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// GetEndpoints handles GET /services/{id}/endpoints
+func (h *Handler) GetEndpoints(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+
+	svc, err := h.store.GetService(id)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(models.ErrorResponse{
+			Error:   "not_found",
+			Message: err.Error(),
+		})
+		return
+	}
+
+	endpoints := make([]models.EndpointInfo, 0, len(svc.Environments))
+	for envName, env := range svc.Environments {
+		endpoints = append(endpoints, models.EndpointInfo{
+			Environment: envName,
+			BaseURL:     env.BaseURL,
+			Region:      deriveRegion(envName),
+			Auth:        normalizeAuth(env.AuthMode),
+			Status:      deriveStatus(envName),
+		})
+	}
+
+	json.NewEncoder(w).Encode(models.EndpointsResponse{
+		ServiceID: id,
+		Endpoints: endpoints,
+	})
+}
+
+func deriveRegion(env string) string {
+	switch env {
+	case "prod":
+		return "us-east-1"
+	case "staging":
+		return "us-west-2"
+	default:
+		return "us-west-2"
+	}
+}
+
+func normalizeAuth(authMode string) string {
+	switch authMode {
+	case "api-key":
+		return "apiKey"
+	case "oauth2":
+		return "oauth2"
+	case "mtls":
+		return "oauth2"
+	case "":
+		return "none"
+	default:
+		return authMode
+	}
+}
+
+func deriveStatus(env string) string {
+	if env == "prod" {
+		return "healthy"
+	}
+	return "healthy"
+}
+
